@@ -5,10 +5,10 @@ Author URI: http://wordpress.ieonly.com/category/my-plugins/
 Contributors: scheeeli
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7K3TSGPAENSGS
 Tags: easy, Google, Analytics, plugin, simple, tracking, code, pages, posts
-Stable tag: 4.0.40
-Version: 4.0.40
+Stable tag: 4.1.06
+Version: 4.1.06
 Requires at least: 2.7
-Tested up to: 4.0
+Tested up to: 4.1
 
 This plugin includes your <a target="_blank" href="http://www.google.com/analytics/web/">Google Analytics</a> tracking code on your pages and posts.
 
@@ -16,7 +16,7 @@ This plugin includes your <a target="_blank" href="http://www.google.com/analyti
 
 This plugin includes your <a target="_blank" href="http://www.google.com/analytics/web/">Google Analytics</a> tracking code on your pages and posts.
 
-Updated October-8th
+Updated February 13th
 
 == Installation ==
 
@@ -29,16 +29,30 @@ Updated October-8th
 
 Just go to the Google Analytics menu link, under Settings, and  enter the Tracking ID for your site.
 
+* Special thanks to Borisa Djuraskovic of the Web Hosting Hub community team for translating into Serbo-Croatian language.
+
 == Screenshots ==
 
-1. ZE Google Analytics Settings page.
+1. EZ Google Analytics Settings page.
 
 == Changelog ==
+
+= 4.1.06 =
+* Added .PO and .MO files for Serbo-Croatian language translated by Borisa Djuraskovic of the Web Hosting Hub community team.
+
+= 4.1.04 =
+* Added .POT file for translations into other languages.
 
 = 4.0.40 =
 * First versions available for WordPress.
 
 == Upgrade Notice ==
+
+= 4.1.06 =
+Added .PO and .MO files for Serbo-Croatian language translated by Borisa Djuraskovic of the Web Hosting Hub community team.
+
+= 4.1.04 =
+Added .POT file for translations into other languages.
 
 = 4.0.40 =
 First versions available for WordPress.
