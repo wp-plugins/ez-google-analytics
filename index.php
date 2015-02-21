@@ -6,7 +6,7 @@ Author: Eli Scheetz
 Author URI: http://wordpress.ieonly.com/category/my-plugins/
 Contributors: scheeeli
 Description: This plugin includes your <a target="_blank" href="http://www.google.com/analytics/web/">Google Analytics</a> tracking code on your pages and posts.
-Version: 4.1.06
+Version: 4.1.07
 */
 /*            ___
  *           /  /\     EZ Google Analytics Main Plugin File
@@ -29,7 +29,7 @@ Version: 4.1.06
  * \  \::/ with this program; if not, write to the Free Software Foundation,    
  *  \__\/ Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA        */
 
-if (isset($_SERVER["SCRIPT_FILENAME"]) && strlen($_SERVER["SCRIPT_FILENAME"]) > strlen(basename(__FILE__)) && substr(__FILE__, -1 * strlen($_SERVER["SCRIPT_FILENAME"])) == substr($_SERVER["SCRIPT_FILENAME"], -1 * strlen(__FILE__)))
+if (isset($_SERVER["DOCUMENT_ROOT"]) && ($SCRIPT_FILE = str_replace($_SERVER["DOCUMENT_ROOT"], "", isset($_SERVER["SCRIPT_FILENAME"])?$_SERVER["SCRIPT_FILENAME"]:isset($_SERVER["SCRIPT_NAME"])?$_SERVER["SCRIPT_NAME"]:"")) && strlen($SCRIPT_FILE) > strlen("/".basename(__FILE__)) && substr(__FILE__, -1 * strlen($SCRIPT_FILE)) == substr($SCRIPT_FILE, -1 * strlen(__FILE__)))
 	die('You are not allowed to call this page directly.<p>You could try starting <a href="/">here</a>.');
 function ezga_install() {
 	global $wp_version;
@@ -39,6 +39,9 @@ function ezga_install() {
 }
 register_activation_hook(__FILE__, "ezga_install");
 $GLOBALS["ezga_settings_array"] = get_option("ezga_settings_array", array());
+function ezga_filter_tracking_id($tracking_id) {
+	return preg_replace('/[^a-zA-Z0-9\-]/', "", $tracking_id);
+}
 function ezga_get_tracking_code($default = 0) {
 	if ($default == 2)
 		return '<script type="text/javascript">
@@ -73,7 +76,7 @@ if (is_admin()) {
 	}
 	add_action("admin_menu", "ezga_admin_menu");
 	function ezga_settings() {
-		if (!(isset($GLOBALS["ezga_settings_array"]["tracking_id"]) && strlen(trim($GLOBALS["ezga_settings_array"]["tracking_id"]))))
+		if (!(isset($GLOBALS["ezga_settings_array"]["tracking_id"]) && strlen(trim(ezga_filter_tracking_id($GLOBALS["ezga_settings_array"]["tracking_id"])))))
 			$GLOBALS["ezga_settings_array"]["tracking_id"] = "";
 		echo '<div class="wrap"><h2>'.__("Google Analytics Settings", 'ezga').'</h2><form name="settingsForm" method="post" action="options.php">';
 		settings_fields("ezga-settings");
@@ -85,12 +88,12 @@ if (is_admin()) {
 			document.getElementById("tracking_code_0").value = ga_source.value;
 	}
 </script>
-<table class="form-table"><tr valign="top"><th scope="row">'.__("Tracking ID:", 'ezga').'</th><td><input type="text" name="ezga_settings_array[tracking_id]" placeholder="UA-0000000-00" value="'.$GLOBALS["ezga_settings_array"]["tracking_id"].'" /><br />'.sprintf(__("Get it here: %s Google Analytics", 'ezga'), '<a target="_blank" href="http://www.google.com/analytics/web/">').' </a></td></tr>
+<table class="form-table"><tr valign="top"><th scope="row">'.__("Tracking ID:", 'ezga').'</th><td><input type="text" name="ezga_settings_array[tracking_id]" placeholder="UA-0000000-00" value="'.ezga_filter_tracking_id($GLOBALS["ezga_settings_array"]["tracking_id"]).'" /><br />'.sprintf(__("Get it here: %s Google Analytics", 'ezga'), '<a target="_blank" href="http://www.google.com/analytics/web/">').' </a></td></tr>
 <tr valign="top"><th scope="row">'.__("Code Location:", 'ezga').'</th><td><select name="ezga_settings_array[code_location]">';
 	foreach (array("wp_head" => __("Header", 'ezga'), "wp_footer" => __("Footer", 'ezga')) as $val => $txt)
 		echo "\n<option value='$val'".(isset($GLOBALS["ezga_settings_array"]["code_location"]) && $GLOBALS["ezga_settings_array"]["code_location"]==$val?" selected":"").">$txt</option>";
 	echo '</select></td></tr>
-<tr valign="top"><th scope="row">'.__("Tracking Code:", 'ezga').'<br /><textarea style="display: none;" id="tracking_code_1">'.htmlentities(ezga_get_tracking_code(1)).'</textarea><a onclick="use_code(1);" href="#settingsForm">'.__("Use Default Code", 'ezga').'</a><br /><textarea style="display: none;" id="tracking_code_2">'.htmlentities(ezga_get_tracking_code(2)).'</textarea><a onclick="use_code(2);" href="#settingsForm">'.__("Use Legacy Code", 'ezga').'</a><br /><a onclick="if (confirm(\''.__("It is not recommend to modify this code. Are you sure you want to customize the Tracking Code?", 'ezga').'\')) {alert(\''.__("Make sure to put the %s in this code where you want your Tracking ID to appear.", 'ezga').'\'); document.getElementById(\'tracking_code_0\').removeAttribute(\'readonly\');}" href="#settingsForm">Modify Code</a></th><td><textarea rows=10 style="width: 100%" id="tracking_code_0" name="ezga_settings_array[tracking_code]" readonly>'.htmlentities(ezga_get_tracking_code()).'</textarea></td></tr></table>';
+<tr valign="top"><th scope="row">'.__("Tracking Code:", 'ezga').'<br /><textarea style="display: none;" id="tracking_code_1">'.htmlspecialchars(ezga_get_tracking_code(1)).'</textarea><a onclick="use_code(1);" href="#settingsForm">'.__("Use Default Code", 'ezga').'</a><br /><textarea style="display: none;" id="tracking_code_2">'.htmlspecialchars(ezga_get_tracking_code(2)).'</textarea><a onclick="use_code(2);" href="#settingsForm">'.__("Use Legacy Code", 'ezga').'</a><br /><a onclick="if (confirm(\''.__("It is not recommend to modify this code. Are you sure you want to customize the Tracking Code?", 'ezga').'\')) {alert(\''.__("Make sure to put the %s in this code where you want your Tracking ID to appear.", 'ezga').'\'); document.getElementById(\'tracking_code_0\').removeAttribute(\'readonly\');}" href="#settingsForm">Modify Code</a></th><td><textarea rows=10 style="width: 100%" id="tracking_code_0" name="ezga_settings_array[tracking_code]" readonly>'.htmlspecialchars(ezga_get_tracking_code()).'</textarea></td></tr></table>';
 		submit_button();
 		echo "</form></div>\n";
 	}
@@ -109,8 +112,8 @@ if (is_admin()) {
 } else {
 	function ezga_tracking_code() {
 		echo "\n<!-- Tracking Code inserted by EZ Google Analytics -->\n";
-		if (isset($GLOBALS["ezga_settings_array"]["tracking_id"]) && strlen(trim($GLOBALS["ezga_settings_array"]["tracking_id"])) > 3)
-			echo sprintf(ezga_get_tracking_code(), $GLOBALS["ezga_settings_array"]["tracking_id"])."\n";
+		if (isset($GLOBALS["ezga_settings_array"]["tracking_id"]) && strlen(trim(ezga_filter_tracking_id($GLOBALS["ezga_settings_array"]["tracking_id"]))) > 3)
+			echo sprintf(ezga_get_tracking_code(), ezga_filter_tracking_id($GLOBALS["ezga_settings_array"]["tracking_id"]))."\n";
 		else
 			echo "<!-- Error: tracking_id not set! -->\n";
 	}
