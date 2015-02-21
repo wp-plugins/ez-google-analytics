@@ -1,0 +1,66 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Eli Scheetz <wordpress@ieonly.com>, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ez-google-analytics\n"
+"Report-Msgid-Bugs-To: wordpress@ieonly.com\n"
+"POT-Creation-Date: 2015-01-20 18:00+0900\n"
+"PO-Revision-Date: 2015-01-28 13:00+0100\n"
+"Last-Translator: Borisa Djuraskovic <borisad@webhostinghub.com>\n"
+"Language-Team: Borisa Djuraskovic <borisad@webhostinghub.com>\n"
+"Language: rs_RS\n"
+"MIME-Version: 1.0\n"
+"X-Generator: Poedit 1.7.4\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#, php-format
+msgid "This Plugin requires WordPress version %s or higher"
+msgstr "Ovaj plugin zahteva WordPress verziju %s ili noviju"
+
+msgid "Google Analytics Settings"
+msgstr "Google Analytics podešavanja"
+
+msgid "Google Analytics"
+msgstr "Google Analytics"
+
+msgid "Tracking ID:"
+msgstr "ID za praćenje:"
+
+#, php-format
+msgid "Get it here: %s Google Analytics"
+msgstr "Nađite ga ovde: %s Google Analytics"
+
+msgid "Code Location:"
+msgstr "Lokacija koda:"
+
+msgid "Header"
+msgstr "Zaglavlje"
+
+msgid "Footer"
+msgstr "Podnožje"
+
+msgid "Tracking Code:"
+msgstr "Kod za praćenje"
+
+msgid "Use Default Code"
+msgstr "Koristi podrazumevani kod"
+
+msgid "Use Legacy Code"
+msgstr "Koristi nasleđeni kod"
+
+msgid "It is not recommend to modify this code. Are you sure you want to customize the Tracking Code?"
+msgstr "Ne preporučuje se menjanje ovog koda. Jeste li sigurni da želite da prilagodite kod za praćenje?"
+
+#, php-format
+msgid "Make sure to put the %s in this code where you want your Tracking ID to appear."
+msgstr "Proverite da li ste uneli %s u ovaj kod, gde želite da vam se pojavi ID za praćenje."
+
+msgid "Settings"
+msgstr "Podešavanja"
+
+msgid "Donate"
+msgstr "Donirajte"
